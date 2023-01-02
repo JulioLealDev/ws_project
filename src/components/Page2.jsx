@@ -7,24 +7,25 @@ import "../style/Home.css";
 import { DataContext } from "../database/DataContext";
 
 export default function Page2() {
+    const context = useContext(DataContext)
+
     const { loading, error, result } = useReadCypher(
-        `MATCH (s:Symptom {name: $simp}) 
-        MATCH (s2:Symptom {name: $simp2})   
-        MATCH (s)-[r:Manifests_in_case_of]->(d:Disease)<-[r2:Manifests_in_case_of]-(s2)
-        WITH d, s.name AS s1, s2.name AS s2
-        MATCH (d)<-[r3:Manifests_in_case_of]-(s:Symptom)
-        WITH s, COUNT(s) AS contagem, s1, s2
-        WHERE contagem < $num
-        WITH s, s1, s2
-        MATCH (d)<-[r]-(s)
-        MATCH (:Symptom { name:s1})-[:Manifests_in_case_of]->(d:Disease)<-[:Manifests_in_case_of]-(:Symptom {name:s2})
-        RETURN s, d`,{simp: 'fatigue', simp2: 'vomiting', num: 2}
+        `with $symptoms as lst
+        UNWIND lst AS x
+        match ( s:Symptom { name : x })
+        match (s)-[r]->(d:Disease)
+        with d , count(d) as quantidade, lst
+        where quantidade = size(lst)
+        match (s:Symptom)-[r]->(d)
+        where not s.name in lst
+        with s , count(s) as quantity, d
+        return s, d, quantity order by quantity limit 24`, {symptoms: context.state.selectedSymptoms}
     );
     
-    const context = useContext(DataContext)
     
     useEffect(() => { 
         if (result?.records) {
+            console.log(result.records)
 
             const a = result?.records
             .map((row) => row.get("d")) 
@@ -53,7 +54,7 @@ export default function Page2() {
     
 
     function refreshSymptons(symptoms){
-        console.log('sintomas: '+symptoms.selectedSymptoms)
+        console.log('sintomas: ', symptoms.selectedSymptoms)
         console.log('doenças: ', symptoms.probableIllnesses)
     }
 
@@ -157,7 +158,7 @@ export default function Page2() {
         // console.log("---: "+data2.disease)
 
         function getSintomas(sintomas) {
-            return sintomas.map(sintoma => {
+            return sintomas?.map(sintoma => {
                 return (
                     <div className="simptoms">
                         <input type="checkbox" value={sintoma} onClick={verification}/>
