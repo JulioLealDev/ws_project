@@ -1,10 +1,18 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DataContext } from '../database/DataContext';
 
 
 export const BasicLayout = ({ children, nextPage, loading=false, error }) => {
+
   const navigate = useNavigate();
+  const context = useContext(DataContext)
+
+  const handleShowContext = () => {
+    console.log('sintomas: ', context.state.selectedSymptoms)
+    console.log('doenças: ', context.state.probableIllnesses)
+}
 
   return (
     <div>
@@ -22,10 +30,10 @@ export const BasicLayout = ({ children, nextPage, loading=false, error }) => {
           </div>
     
           <div className="btn">
-            <button onClick={() => navigate(nextPage)}>
-              Other Symptoms
+            <button  type="button" onClick={handleShowContext}>
+              Show Context
             </button>
-            <button onClick={() => navigate('/page2')}>
+            <button  type="button" onClick={() => navigate('/page2')}>
               Proceed
             </button>
           </div>
