@@ -1,0 +1,49 @@
+body {
+    background-color: #283655;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.titleResult {
+    display: block; 
+}
+
+#result {
+    text-align: center;
+    font-size: 44px;
+    color: #4d648d;
+    font-weight: bold;
+}
+
+.bodyResult {
+    background-color: #d0e1f9;
+    height: 400px;
+    margin-top: 250px;
+    padding-top: 25px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 62px;
+    color: #283655;
+    font-weight: bold;
+}
+
+.btnResult {
+    height: 60px;
+    width: 200px;
+    font-size: xx-large;
+    font-weight: 600;
+    line-height: 36px;
+    display: block;
+    margin: auto;
+    color: #e7eff6;
+    border: 2px solid #e7eff6;
+    background-color: #4d648d;
+}
+
+.btnResult:hover {
+    background-color: #d0e1f9;
+    border-color: #4d648d;
+    color: #4d648d;
+    cursor: pointer;
+}
