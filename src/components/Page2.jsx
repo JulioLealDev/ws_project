@@ -1,5 +1,5 @@
+import React, { useContext, useEffect, useState }  from "react";
 import { useReadCypher } from "use-neo4j";
-import React, { useContext, useEffect }  from "react";
 import { useNavigate } from 'react-router-dom';
 
 import "../style/Home.css";
@@ -7,31 +7,6 @@ import "../style/Home.css";
 import { DataContext } from "../database/DataContext";
 
 export default function Page2() {
-
-    
-    const context = useContext(DataContext)
-
-    let data2 = [];
-    useEffect(function() {
-        for(let i = 0; i < data2?.disease?.length; i++){
-            context.setState({
-                ...context.state,
-                probableIllnesses: [...context.state.probableIllnesses, data2.disease[i]],
-            });
-        }
-    }, [data2])
-
-    function refreshSymptons(symptoms){
-        console.log('sintomas: '+symptoms.selectedSymptoms)
-        console.log('doenças: '+symptoms.probableIllnesses)
-    }
-
-    const navigate = useNavigate();
-    
-    const nextPage = async e => {
-        return navigate('/page3');
-    }
-
     const { loading, error, result } = useReadCypher(
         `MATCH (s:Symptom {name: $simp}) 
         MATCH (s2:Symptom {name: $simp2})   
@@ -43,7 +18,54 @@ export default function Page2() {
         WITH s, s1, s2
         MATCH (d)<-[r]-(s)
         MATCH (:Symptom { name:s1})-[:Manifests_in_case_of]->(d:Disease)<-[:Manifests_in_case_of]-(:Symptom {name:s2})
-        RETURN s, d`,{simp: context.state.selectedSymptoms[0], simp2: context.state.selectedSymptoms[1], num: 2});
+        RETURN s, d`,{simp: 'fatigue', simp2: 'vomiting', num: 2}
+    );
+    
+    const context = useContext(DataContext)
+    
+    useEffect(() => { 
+        if (result?.records) {
+
+            const a = result?.records
+            .map((row) => row.get("d")) 
+            .reduce(
+                (accumulator, currentValue) => {
+                    if(!accumulator?.disease?.includes(currentValue?.properties?.name)){
+                        return {
+                            ...accumulator,
+                            disease: [...accumulator.disease, currentValue.properties.name],
+                        };
+                    }
+                    return { ...accumulator};
+                },
+                {
+                disease: []
+                }
+            );
+
+            context.setState(
+                {
+                    ...context.state, 
+                    probableIllnesses: a.disease,
+                });
+        } 
+    }, [result?.records]);
+    
+
+    function refreshSymptons(symptoms){
+        console.log('sintomas: '+symptoms.selectedSymptoms)
+        console.log('doenças: ', symptoms.probableIllnesses)
+    }
+
+    const navigate = useNavigate();
+    
+    const nextPage = async e => {
+        return navigate('/page3');
+    }
+
+
+
+
 
     if (loading) return (
         <div>
@@ -130,24 +152,9 @@ export default function Page2() {
             }
         );
 
-        data2 = result?.records
-        .map((row) => row.get("d")) 
-        .reduce(
-            (accumulator, currentValue) => {
-                if(!accumulator?.disease?.includes(currentValue?.properties?.name)){
-                    return {
-                        ...accumulator,
-                        disease: [...accumulator.disease, currentValue.properties.name],
-                    };
-                }
-                return { ...accumulator};
-            },
-            {
-            disease: []
-            }
-        );
 
-        console.log("---: "+data2.disease)
+
+        // console.log("---: "+data2.disease)
 
         function getSintomas(sintomas) {
             return sintomas.map(sintoma => {
