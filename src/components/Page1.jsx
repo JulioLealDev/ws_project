@@ -116,27 +116,7 @@ export default function Page1() {
             })
         }
 
-        return (
-            <div>
-                <div className="title">
-                    <p>Select the symptoms</p>
-                </div>
-                <div className="body">
-                    <form className="form">
-                        <div className="group">
-                            <div className="inputGroup">
-                                {getSintomas(data.symptom)}
-                            </div>
-                        </div>
-                        
-                        <div className="btn">
-                            <button type="button" onClick={() => refreshSymptons(context.state)}>Other Symptoms</button>
-                            <button onClick={nextPage}>Proceed</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        )
+
 
     }
 
