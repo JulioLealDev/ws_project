@@ -10,23 +10,29 @@ export const Home = () => {
 
   const context = useContext(DataContext)
   const [symptoms, setSymptoms] = useState([])
-  
 
   const { loading, error, result } = useReadCypher(`
     MATCH (s:Symptom)-[r:Manifests_in_case_of]->(d:Disease) 
     WITH s, COUNT(r) AS num ORDER BY num DESC 
-    RETURN s LIMIT 24
+    RETURN s
   `);
 
   useEffect(() => { 
     if (result?.records) {
 
-      setSymptoms(
-        getSymptoms({
-          key: 's',
-          records: result?.records
-        })
-      )
+      const symptomslist = getSymptoms({
+        key: 's',
+        records: result?.records
+      })
+
+      context.setState(
+        {
+            ...context.state, 
+            remainingSymptoms: symptomslist.filter(item => !symptomslist.slice(0,24).includes(item))
+        }
+      );
+
+      setSymptoms( symptomslist.slice(0,24))
 
     }
   }, [result?.records])
@@ -50,7 +56,7 @@ export const Home = () => {
   }
     
     return (
-      <BasicLayout loading={loading} error={error} nextPage={'/page2'}>
+      <BasicLayout loading={loading} error={error} setSymptoms={setSymptoms}>
         {symptoms.map((symptom, index) => (
           <div key={`${symptom}-${index}`} className="symptoms">
             <input type="checkbox" id={`${symptom}-${index}`} value={symptom} onClick={handleSelectedSymptom}/>

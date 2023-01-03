@@ -2,7 +2,7 @@ import React from "react";
 
 export const data = {
     selectedSymptoms: [],
-    probableIllnesses: [],
+    remainingSymptoms: []
 }
 
 export const DataContext = React.createContext(data)

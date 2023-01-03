@@ -2,15 +2,30 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../database/DataContext';
 
-export const BasicLayout = ({ children, nextPage, loading=false, error }) => {
+export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => {
 
   const navigate = useNavigate();
   const context = useContext(DataContext)
 
-  const handleShowContext = () => {
-    console.log('sintomas: ', context.state.selectedSymptoms)
-    console.log('doenças: ', context.state.probableIllnesses)
-}
+  // const handleShowContext = () => {
+  //   console.log('sintomas: ', context.state.selectedSymptoms)
+  //   console.log('pool: ', context.state.remainingSymptoms)
+  // }
+
+  const handleRefreshSymptoms = () => {
+
+      const newSymptoms = context.state.remainingSymptoms.slice(0,24)
+
+      setSymptoms(newSymptoms)
+
+      context.setState(
+        {
+            ...context.state, 
+            remainingSymptoms: context.state.remainingSymptoms.filter(item => !newSymptoms.includes(item))
+        }
+      )
+
+  }
 
   return (
     <div>
@@ -30,11 +45,14 @@ export const BasicLayout = ({ children, nextPage, loading=false, error }) => {
           </div>
     
           <div className="btn">
-            <button  type="button" onClick={handleShowContext}>
-              Show Context
+            {/* <button  type="button" onClick={handleShowContext}>
+              Debug
+            </button> */}
+            <button  type="button" onClick={handleRefreshSymptoms} disabled={context.state.remainingSymptoms.length < 24}>
+              Refresh Symptoms
             </button>
-            <button  type="button" onClick={() => navigate(nextPage)}>
-              Proceed
+            <button  type="button" onClick={() => navigate('/ranking')}>
+              Finish
             </button>
           </div>
         </form>

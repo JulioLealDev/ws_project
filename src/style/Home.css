@@ -1,6 +1,6 @@
 button {
     height: 60px;
-    width: 300px;
+    width: 400px;
     font-size: xx-large;
     font-weight: 600;
     line-height: 36px;
@@ -16,6 +16,12 @@ button:hover {
     border-color: #4d648d;
     color: #4d648d;
     cursor: pointer;
+}
+
+button:disabled {
+    background-color: #d0e1f9 ;
+    border-color: #4d648d;
+    color: #4d648d;
 }
 
 .error{
