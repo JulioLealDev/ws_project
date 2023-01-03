@@ -57,7 +57,7 @@ p{
     flex-wrap: wrap;
 }
 
-.simptoms {
+.symptoms {
     display: flex;
     background-color: #ffffff;
     flex-direction: row;
@@ -67,7 +67,7 @@ p{
     width: 400px;
 }
 
-.simptoms:hover{
+.symptoms:hover{
     border-color: #005cc8;
     background-color: #d0e1f9;
 }
@@ -86,7 +86,7 @@ input:checked + label {
     color: #005cc8;
 }
 
-.simptoms:has(input:checked) {
+.symptoms:has(input:checked) {
     border-color: #005cc8;
 }
 
