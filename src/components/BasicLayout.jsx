@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../database/DataContext';
-import "../style/Home.css";
-
+import "../style/style.css";
+  
 export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => {
 
   const navigate = useNavigate();

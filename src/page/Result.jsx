@@ -2,7 +2,7 @@ import React from "react";
 import { useContext, useEffect, useState} from "react";
 import { useReadCypher } from "use-neo4j";
 
-import "../style/Result.css";
+import "../style/style.css";
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from "../database/DataContext";
 import { getData} from "../utils/getData";
@@ -41,18 +41,18 @@ export const Result = () => {
 
     return (
         <div>
-            <div className="bodyResult">
+            <div className="bodyPage">
 
                 { context.state.selectedSymptoms.length === 0 ? (
                     <>
-                        <div className="titleResult">
+                        <div className="title">
                             <p>You din't select any symptoms.</p>
                             <p>Please go back and select the symptoms you have.</p>
                         </div>
                     </>
                 ) : (
                     <>
-                        <div className="titleResult">
+                        <div className="title">
                             <p>You will be forwarded to the appointment with the </p>
                         </div><div>
                             {loading ? (

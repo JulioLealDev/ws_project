@@ -30,7 +30,6 @@ button:disabled {
 }
 
 .group{
-
     display: flex;
     flex-direction: row;
 }
@@ -48,6 +47,12 @@ button:disabled {
 .body {
     background-color: #d0e1f9     ;
     padding-top: 10px;
+}
+
+.bodyPage {
+    background-color: #d0e1f9;
+    margin-top: 150px;
+    padding-top: 25px;
 }
 
 h1{
@@ -104,12 +109,53 @@ input {
 }
 
 .form {
-  padding: 0 16px;
-  font-weight: 600;
-  line-height: 36px;
+    padding: 0 16px;
+    font-weight: 600;
+    line-height: 36px;
 }
 
 body {
-  background-color: #283655  ;
-  font-family: 'Fira Sans', sans-serif;
+    background-color: #283655  ;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+p {
+    text-align: center;
+    font-size: 44px;
+    color: #4d648d;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    font-size: 62px;
+    color: #283655;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+ul > li {
+    border-bottom: 2px solid #bed9ff;
+    padding: 6px;
+    font-size: 36px;
+    font-weight: 600;
+    text-align: left;
+    color: #283655;
+    padding-left: 40px;
+}
+ul > li:nth-of-type(odd) {
+    background-color: #e9e9f9 ;
+}
+ul > li:last-child {
+    border-bottom: none;
 }

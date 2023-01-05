@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useReadCypher } from "use-neo4j";
 import { BasicLayout } from "../components/BasicLayout"
 import { getData} from "../utils/getData";
-import "../style/Home.css";
+import "../style/style.css";
 
 import { DataContext } from "../database/DataContext";
 
@@ -52,7 +52,6 @@ export const Home = () => {
                 selectedSymptoms:[ ...context.state.selectedSymptoms, value]
             });
     }
-
   }
     
     return (

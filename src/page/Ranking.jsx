@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useEffect, useState} from "react";
-import "../style/Ranking.css";
+import "../style/style.css";
 import { useNavigate } from 'react-router-dom';
 import { useReadCypher } from "use-neo4j";
 import { DataContext } from "../database/DataContext";
@@ -46,9 +46,9 @@ export const Ranking = () => {
 
     return (
         <div>
-            <div className="bodyRanking">
-                <div className="titleRanking">
-                    <p id="ranking">Most likely diseases </p>
+            <div className="bodyPage">
+                <div className="title">
+                    <p>Most probable diseases </p>
                 </div>
                 <div>
                     {loading ? (
