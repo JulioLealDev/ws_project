@@ -23,7 +23,7 @@ export const Result = () => {
         MATCH (s:Symptom { name : x })-[r]->(d:Disease)
         WITH d, COUNT(d) AS quant ORDER BY quant DESC
         WITH d limit 5 
-        MATCH (s:Specialist)-[r]->(d)
+        MATCH (s:Specialist)<-[r]-(d)
         WITH s, COUNT(s) AS quant ORDER BY quant DESC
         RETURN s limit 1`,{list:denormalizedSymptoms}
     );
@@ -40,36 +40,38 @@ export const Result = () => {
     }, [result?.records])
 
     return (
-        <div>
-            <div className="bodyPage">
-
-                { context.state.selectedSymptoms.length === 0 ? (
-                    <>
-                        <div className="title">
-                            <p>You din't select any symptoms.</p>
-                            <p>Please go back and select the symptoms you have.</p>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className="title">
-                            <p>You will be forwarded to the appointment with the </p>
-                        </div><div>
-                            {loading ? (
-                                <h2 className="error">Loading data...</h2>
-                            ) : error ? (
-                                <h2 className="error">{error.message}</h2>
-                            ) :
-                                <h2>{specialist}</h2>}
-                        </div>
-                    </>
-                )}
-
-                <div className="btn">
-                    <button onClick={() => navigate('/')}>Back</button>
-                    <button onClick={() => navigate('/ranking')}>Ranking</button>
+        <>
+        <section className="title">
+            <a class="logo" href='/'>
+                <img height="55px" width="55px" alt='teste'src="heart_icon_green.png"></img>
+                <h1 id="topTriage">TopTriage</h1>
+            </a>
+        </section>
+        { context.state.selectedSymptoms.length === 0 ? (
+            <>
+                <div className="resultDiv">
+                    <p>You din't select any symptoms.</p>
+                    <p>Please go back and select the symptoms you have.</p>
                 </div>
-            </div>
+            </>
+        ) : (
+            <>
+                <div className="resultDiv">
+                    <h1>You will be forwarded to the appointment with the </h1>
+                    {loading ? (
+                        <p className="error">Loading data...</p>
+                    ) : error ? (
+                        <p className="error">{error.message}</p>
+                    ) :
+                        <p>{specialist}</p>}
+                </div>
+            </>
+        )}
+
+        <div className="buttonsDiv">
+            <button onClick={() => navigate('/')}>Back</button>
+            <button onClick={() => navigate('/ranking')}>Ranking</button>
         </div>
+        </>
     )
 };

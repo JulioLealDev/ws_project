@@ -58,8 +58,8 @@ export const Home = () => {
       <BasicLayout loading={loading} error={error} setSymptoms={setSymptoms}>
         {symptoms.map((symptom, index) => (
           <div key={`${symptom}-${index}`} className="symptoms">
-            <input type="checkbox" id={`${symptom}-${index}`} value={symptom} onClick={handleSelectedSymptom}/>
-            <label htmlFor={`${symptom}-${index}`}>{symptom}</label>
+            <input type="checkbox" name={`${symptom}-${index}`} id={`${symptom}-${index}`} value={symptom} onClick={handleSelectedSymptom}/>
+            <label for={`${symptom}-${index}`}>{symptom}</label>
           </div>
         ))}
       </BasicLayout>

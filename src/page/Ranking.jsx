@@ -45,24 +45,25 @@ export const Ranking = () => {
     }
 
     return (
-        <div>
-            <div className="bodyPage">
-                <div className="title">
-                    <p>Most probable diseases </p>
-                </div>
-                <div>
-                    {loading ? (
-                        <h2 className="error">Loading Ranking...</h2>
-                    ): error ? (
-                        <h2 className="error">{error.message}</h2>
-                    ): <ul>
-                          {getRanking()}
-                       </ul>}  
-                </div>
-                <div className="btn">
-                    <button onClick={() => navigate("/")}>Back to Home</button>
-                </div>
+        <>
+            <section className="title">
+                <a class="logo" href='/'>
+                    <img height="55px" width="55px" alt='teste'src="heart_icon_green.png"></img>
+                    <h1 id="topTriage">TopTriage</h1>
+                </a>
+            </section>
+            <div className="resultDiv">
+                <p>Most probable diseases </p>
+                {loading ? (
+                    <h2 className="error">Loading Ranking...</h2>
+                ) : error ? (
+                    <h2 className="error">{error.message}</h2>
+                ) : <ul>
+                    {getRanking()}
+                </ul>}
+            </div><div className="buttonsDiv">
+                <button onClick={() => navigate("/")}>Back to Home</button>
             </div>
-        </div>
+         </>
     )
 };
