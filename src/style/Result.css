@@ -7,7 +7,7 @@ body {
     display: block; 
 }
 
-#result {
+p {
     text-align: center;
     font-size: 44px;
     color: #4d648d;

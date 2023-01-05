@@ -4,7 +4,7 @@ import "../style/Ranking.css";
 import { useNavigate } from 'react-router-dom';
 import { useReadCypher } from "use-neo4j";
 import { DataContext } from "../database/DataContext";
-import { getDiseases} from "../utils/getDiseases";
+import { getData} from "../utils/getData";
 
 export const Ranking = () => {
 
@@ -26,7 +26,7 @@ export const Ranking = () => {
     useEffect(() => { 
         if (result?.records) {
     
-            setRanking(getDiseases({
+            setRanking(getData({
                 key: 'd',
                 records: result?.records
             }).slice(0,5))
@@ -52,15 +52,15 @@ export const Ranking = () => {
                 </div>
                 <div>
                     {loading ? (
-                        <h3 className="error">Loading Ranking...</h3>
+                        <h2 className="error">Loading Ranking...</h2>
                     ): error ? (
-                        <h3 className="error">{error.message}</h3>
+                        <h2 className="error">{error.message}</h2>
                     ): <ul>
                           {getRanking()}
                        </ul>}  
                 </div>
                 <div className="btn">
-                    <button className="btnRanking" onClick={() => navigate("/")}>Back to Home</button>
+                    <button onClick={() => navigate("/")}>Back to Home</button>
                 </div>
             </div>
         </div>

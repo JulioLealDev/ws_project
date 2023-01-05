@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useReadCypher } from "use-neo4j";
 import { BasicLayout } from "../components/BasicLayout"
-import { getSymptoms } from "../utils/getSymptoms";
+import { getData} from "../utils/getData";
 import "../style/Home.css";
 
 import { DataContext } from "../database/DataContext";
@@ -20,7 +20,7 @@ export const Home = () => {
   useEffect(() => { 
     if (result?.records) {
 
-      const symptomslist = getSymptoms({
+      const symptomslist = getData({
         key: 's',
         records: result?.records
       })

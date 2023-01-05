@@ -1,44 +1,73 @@
 import React from "react";
+import { useContext, useEffect, useState} from "react";
+import { useReadCypher } from "use-neo4j";
+
 import "../style/Result.css";
-import especialistas from "../database/Especialistas";
 import { useNavigate } from 'react-router-dom';
+import { DataContext } from "../database/DataContext";
+import { getData} from "../utils/getData";
+
 
 export const Result = () => {
 
+    const context = useContext(DataContext)
+    const [specialist, setSpecialist] = useState([])
+
     const navigate = useNavigate();
 
-    function getEspecialistas() {
-        return especialistas.map(especialista => {
-            return (
-                <h2>
-                        {especialista.nome}
-                </h2>
-            )
-        })
-    }
+    const denormalizedSymptoms = context.state.selectedSymptoms.map((item) => item.replaceAll(" ", "_").toLowerCase());
 
-    const home = async e => {
-        return navigate('/');
-    }
+    const { loading, error, result } = useReadCypher(`
+        WITH $list as lst
+        UNWIND lst AS x
+        MATCH (s:Symptom { name : x })-[r]->(d:Disease)
+        WITH d, COUNT(d) AS quant ORDER BY quant DESC
+        WITH d limit 5 
+        MATCH (s:Specialist)-[r]->(d)
+        WITH s, COUNT(s) AS quant ORDER BY quant DESC
+        RETURN s limit 1`,{list:denormalizedSymptoms}
+    );
 
-    const ranking = async e => {
-        return navigate('/ranking');
-    }
+    useEffect(() => { 
+        if (result?.records) {
+    
+            setSpecialist(getData({
+                key: 's',
+                records: result?.records
+            }))
+        }
 
-    let random = Math.floor(Math.random() * 16);
+    }, [result?.records])
 
     return (
         <div>
             <div className="bodyResult">
-                <div className="titleResult">
-                    <p id="result">You will be forwarded to the appointment with the </p>
-                </div>
-                <div>
-                     {getEspecialistas()[random]}
-                </div>
+
+                { context.state.selectedSymptoms.length === 0 ? (
+                    <>
+                        <div className="titleResult">
+                            <p>You din't select any symptoms.</p>
+                            <p>Please go back and select the symptoms you have.</p>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="titleResult">
+                            <p>You will be forwarded to the appointment with the </p>
+                        </div><div>
+                            {loading ? (
+                                <h2 className="error">Loading data...</h2>
+                            ) : error ? (
+                                <h2 className="error">{error.message}</h2>
+                            ) :
+                                <h2>{specialist}</h2>}
+                        </div>
+                    </>
+                )}
+
                 <div className="btn">
-                    <button className="btnResult" onClick={home}>Back</button>
-                    <button className="btnResult" onClick={ranking}>Ranking</button>
+                    <button onClick={() => navigate('/')}>Back</button>
+                    <button onClick={() => navigate('/ranking')}>Ranking</button>
                 </div>
             </div>
         </div>
