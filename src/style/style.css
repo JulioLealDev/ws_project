@@ -11,7 +11,6 @@ button {
   font-weight: 600;
   line-height: 36px;
   display: block;
-  margin: auto;
   color: #e7eff6;
   border: 2px solid #e7eff6;
   background-color: #1976d2;
@@ -44,9 +43,24 @@ button:disabled {
 
 .buttonsDiv {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   background-color: #e8f0fe;
   min-height: 150px;
+  max-width: 1680px;
+  margin: auto;
+  padding: 0 10px;
+}
+
+.buttonsDiv > div {
+  display: flex;
+  gap: 8px;
+}
+
+.buttonsDiv > div > button {
+  width: fit-content;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 p {
@@ -105,7 +119,12 @@ h1 {
 .inputGroup {
   display: flex;
   justify-content: center;
+  align-content: center;
+
   flex-wrap: wrap;
+  max-width: 1680px;
+  min-height: 708px;
+  margin: auto;
 }
 
 .symptoms {
@@ -115,6 +134,7 @@ h1 {
   margin: 20px 10px 10px 10px;
   width: 400px;
   font-weight: 600;
+  max-height: 88px;
 }
 
 ul {

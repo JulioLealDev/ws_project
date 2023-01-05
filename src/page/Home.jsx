@@ -28,11 +28,9 @@ export const Home = () => {
       setStateContext( oldStateContext =>
         ({
             ...oldStateContext, 
-            remainingSymptoms: symptomsList.filter(item => !symptomsList.slice(0,24).includes(item))
+            remainingSymptoms: symptomsList
         })
       );
-
-      setSymptoms( symptomsList.slice(0,24))
 
     }
   }, [result?.records, setStateContext])
