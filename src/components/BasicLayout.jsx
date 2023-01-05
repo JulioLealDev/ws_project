@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from '../database/DataContext';
 import "../style/style.css";
 
@@ -26,10 +26,10 @@ export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => 
   return (
     <div>
       <section className="title">
-        <a class="logo" href='/'>
+        <Link class="logo" to='/'>
           <img height="55px" width="55px" alt='teste'src="heart_icon_green.png"></img>
           <h1 id="topTriage">TopTriage</h1>
-        </a>
+        </Link>
         <p id="homeTitle">Select the symptoms</p>
       </section>
       <div className="symptomsDiv">

@@ -15,6 +15,7 @@ button {
   color: #e7eff6;
   border: 2px solid #e7eff6;
   background-color: #1976d2;
+  transition: 0.1s all;
 }
 
 button:hover {
@@ -28,6 +29,7 @@ button:disabled {
   background-color: #e8f0fe;
   border-color: #4d648d;
   color: #4d648d;
+  cursor: not-allowed;
 }
 
 .error {

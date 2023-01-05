@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext, useEffect, useState} from "react";
 import "../style/style.css";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useReadCypher } from "use-neo4j";
 import { DataContext } from "../database/DataContext";
 import { getData} from "../utils/getData";
@@ -13,14 +13,14 @@ export const Ranking = () => {
 
     const navigate = useNavigate();
 
-    const denormalizedSymptoms = context.state.selectedSymptoms.map((item) => item.replaceAll(" ", "_").toLowerCase());
+    const desnormalizedSymptoms = context.state.selectedSymptoms.map((item) => item.replaceAll(" ", "_").toLowerCase());
 
     const { loading, error, result } = useReadCypher(`
         WITH $list as lst
         UNWIND lst AS x
         MATCH ( s:Symptom { name : x })-[r]->(d:Disease)
         WITH d, COUNT(d) AS quant, lst
-        RETURN d, quant ORDER BY quant DESC`,{list:denormalizedSymptoms}
+        RETURN d, quant ORDER BY quant DESC`,{list:desnormalizedSymptoms}
     );
 
     useEffect(() => { 
@@ -47,10 +47,10 @@ export const Ranking = () => {
     return (
         <>
             <section className="title">
-                <a class="logo" href='/'>
+                <Link class="logo" href='/'>
                     <img height="55px" width="55px" alt='teste'src="heart_icon_green.png"></img>
                     <h1 id="topTriage">TopTriage</h1>
-                </a>
+                </Link>
             </section>
             <div className="resultDiv">
                 <p>Most probable diseases </p>
@@ -62,7 +62,17 @@ export const Ranking = () => {
                     {getRanking()}
                 </ul>}
             </div><div className="buttonsDiv">
-                <button onClick={() => navigate("/")}>Back to Home</button>
+                <button 
+                    onClick={() => {
+                        context.setState(oldState => ({
+                            ...oldState,
+                            selectedSymptoms: [],
+                        }))
+                        navigate('/')
+                    }}
+                >
+                    Back to Home
+                </button>
             </div>
          </>
     )
