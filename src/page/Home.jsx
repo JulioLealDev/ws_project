@@ -8,7 +8,7 @@ import { DataContext } from "../database/DataContext";
 
 export const Home = () => {
 
-  const context = useContext(DataContext)
+  const { state: stateContext, setState: setStateContext } = useContext(DataContext)
   const [symptoms, setSymptoms] = useState([])
 
   const { loading, error, result } = useReadCypher(`
@@ -20,36 +20,36 @@ export const Home = () => {
   useEffect(() => { 
     if (result?.records) {
 
-      const symptomslist = getData({
+      const symptomsList = getData({
         key: 's',
         records: result?.records
       })
 
-      context.setState(
-        {
-            ...context.state, 
-            remainingSymptoms: symptomslist.filter(item => !symptomslist.slice(0,24).includes(item))
-        }
+      setStateContext( oldStateContext =>
+        ({
+            ...oldStateContext, 
+            remainingSymptoms: symptomsList.filter(item => !symptomsList.slice(0,24).includes(item))
+        })
       );
 
-      setSymptoms( symptomslist.slice(0,24))
+      setSymptoms( symptomsList.slice(0,24))
 
     }
-  }, [result?.records])
+  }, [result?.records, setStateContext])
 
   const handleSelectedSymptom =  (e) => {
     const value = e.target.getAttribute("value")
-    if(context.state.selectedSymptoms.includes(value)){
-        context.setState(
+    if(stateContext.selectedSymptoms.includes(value)){
+        setStateContext(
             {
-                ...context.state, 
-                selectedSymptoms: context.state.selectedSymptoms.filter(item => item !== value)
+                ...stateContext, 
+                selectedSymptoms: stateContext.selectedSymptoms.filter(item => item !== value)
             });
     }else{
-        context.setState(
+        setStateContext(
             {
-                ...context.state, 
-                selectedSymptoms:[ ...context.state.selectedSymptoms, value]
+                ...stateContext, 
+                selectedSymptoms:[ ...stateContext.selectedSymptoms, value]
             });
     }
   }
