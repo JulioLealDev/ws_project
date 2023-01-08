@@ -4,27 +4,27 @@ body {
   padding: 0;
 }
 
-button {
+.buttonsFooter {
   height: 60px;
-  width: 400px;
+  width: 300px;
   font-size: xx-large;
   font-weight: 600;
   line-height: 36px;
   display: block;
   color: #e7eff6;
-  border: 2px solid #e7eff6;
+  border: 2px solid #fff;
   background-color: #1976d2;
   transition: 0.1s all;
 }
 
-button:hover {
+.buttonsFooter:hover {
   background-color: #e8f0fe;
   border-color: #4d648d;
   color: #4d648d;
   cursor: pointer;
 }
 
-button:disabled {
+.buttonsFooter:disabled {
   background-color: #e8f0fe;
   border-color: #4d648d;
   color: #4d648d;
@@ -45,7 +45,6 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e8f0fe;
   min-height: 150px;
   max-width: 1680px;
   margin: auto;
@@ -58,7 +57,6 @@ button:disabled {
 }
 
 .buttonsDiv > div > button {
-  width: fit-content;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -120,19 +118,16 @@ h1 {
   display: flex;
   justify-content: center;
   align-content: center;
-
   flex-wrap: wrap;
   max-width: 1680px;
-  min-height: 708px;
-  margin: auto;
 }
 
 .symptoms {
   display: flex;
   background-color: #fff;
   flex-direction: row;
-  margin: 20px 10px 10px 10px;
-  width: 400px;
+  margin: 10px 10px 10px 10px;
+  width: 350px;
   font-weight: 600;
   max-height: 88px;
 }
@@ -174,7 +169,7 @@ label {
   z-index: 2;
   transition: color 200ms ease-in;
   overflow: hidden;
-  font-size: 32px;
+  font-size: 28px;
   display: flex;
   align-items: center;
 }
@@ -253,4 +248,34 @@ body {
 
 html {
   box-sizing: border-box;
+}
+
+#sidebar{
+    width:100%;
+    display:block;
+    flex-direction: column;
+    padding-top: 5px;
+    margin: 10px 0px 10px 30px;
+    background-color: #d7e4fa;
+    text-align: center;
+    color: #4d648d;
+    max-width: 335px;
+    height: 625px;
+    overflow-x: hidden;
+}
+
+.teste{
+    display: flex;
+    flex-direction: row;
+}
+
+.selectedSymptoms{
+    width: 300px;
+    height: 40px;
+    margin: 5px 10px;
+    border: 1px solid #fff;
+    background-color: #1976d2;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
 }

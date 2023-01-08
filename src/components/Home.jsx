@@ -19,7 +19,6 @@ export default function Home() {
     }
 
     function refreshSymptons(symptoms){
-        console.log('teste simp: '+symptoms)
     }
 
     return (

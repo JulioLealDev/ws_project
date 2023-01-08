@@ -62,7 +62,7 @@ export const Ranking = () => {
                     {getRanking()}
                 </ul>}
             </div><div className="buttonsDiv">
-                <button 
+                <button  className="buttonsFooter"
                     onClick={() => {
                         context.setState(oldState => ({
                             ...oldState,

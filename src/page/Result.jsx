@@ -71,14 +71,14 @@ export const Result = () => {
         )}
 
         <div className="buttonsDiv">
-            <button onClick={() => {
+            <button className="buttonsFooter" onClick={() => {
                 context.setState(oldState => ({
                     ...oldState,
                     selectedSymptoms: [],
                 }))
                 navigate('/')
             }}>Back</button>
-            <button disabled={isEmptySymptomsSelected} onClick={() => navigate('/ranking')}>Ranking</button>
+            <button className="buttonsFooter" disabled={isEmptySymptomsSelected} onClick={() => navigate('/ranking')}>Ranking</button>
         </div>
         </>
     )

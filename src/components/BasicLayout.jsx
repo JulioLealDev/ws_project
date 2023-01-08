@@ -9,22 +9,25 @@ export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => 
   const context = useContext(DataContext)
   const [searchParams, setSearchParams ] = useSearchParams();
   const [page, setPage] = useState(() => searchParams.get('page') || 1);
+  const { state: stateContext, setState: setStateContext } = useContext(DataContext)
 
 
-  // const handleRefreshSymptoms = () => {
-
-  //     const newSymptoms = context.state.remainingSymptoms.slice(0,24)
-
-  //     setSymptoms(newSymptoms)
-
-  //     context.setState(
-  //       {
-  //           ...context.state, 
-  //           remainingSymptoms: context.state.remainingSymptoms.filter(item => !newSymptoms.includes(item))
-  //       }
-  //     )
-
-  // }
+  const handleRemoveSymptom =  (e) => {
+    const value = e.target.getAttribute("value")
+    if(stateContext.selectedSymptoms.includes(value)){
+        setStateContext(
+            {
+                ...stateContext, 
+                selectedSymptoms: stateContext.selectedSymptoms.filter(item => item !== value)
+            });
+    }else{
+        setStateContext(
+            {
+                ...stateContext, 
+                selectedSymptoms:[ ...stateContext.selectedSymptoms, value]
+            });
+    }
+  }
   
   const handlePage = (newPage) => {
     setSearchParams({page: newPage})
@@ -32,17 +35,12 @@ export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => 
   }
 
   useEffect(() => {
-    console.log(page)
     const initial = (page-1) * 24
     const final = initial + 24
 
-    console.log(context.state.remainingSymptoms)
-
     const items = context.state.remainingSymptoms.slice(initial,final)
 
-    console.log(items)
-
-    setSymptoms(items)
+    setSymptoms(items.sort())
   }, [page, context.state, setSymptoms])
 
 
@@ -55,23 +53,33 @@ export const BasicLayout = ({ children, loading=false, error, setSymptoms }) => 
         </Link>
         <p id="homeTitle">Select the symptoms</p>
       </header>
-      <main className="inputGroup">
-        {loading ? (
-          <h2 className="error">Loading Symptoms...</h2>
-        ): error ? (
-          <h2 className="error">{error.message}</h2>
-        ): children}
-      </main>
+      <div className="teste">
+        <sidebar id="sidebar">
+          <h2>Selected Symptoms</h2>
+          {context.state.selectedSymptoms.map((symptom, index) => (
+            <button key={`${symptom}-${index}`} className="selectedSymptoms" value={symptom} onClick={handleRemoveSymptom}> 
+              {symptom}
+            </button>
+          ))}
+        </sidebar>
+        <main className="inputGroup">
+          {loading ? (
+            <h2 className="error">Loading Symptoms...</h2>
+          ): error ? (
+            <h2 className="error">{error.message}</h2>
+          ): children}
+        </main>
+      </div>
       <footer className="buttonsDiv">
         <div>
-          <button type="button" onClick={() => handlePage(Number(page) - 1)} disabled={page === 1}>
+          <button className="buttonsFooter" type="button" onClick={() => handlePage(Number(page) - 1)} disabled={page === 1}>
             Previous Page
           </button>
-          <button type="button" onClick={() => handlePage(Number(page) + 1)} disabled={page === 6}>
+          <button className="buttonsFooter" type="button" onClick={() => handlePage(Number(page) + 1)} disabled={page === 6}>
             Next Page
           </button>
         </div>
-        <button type="button" onClick={() => navigate('/result')}>
+        <button className="buttonsFooter" type="button" onClick={() => navigate('/result')}>
           Finish
         </button>
       </footer>
