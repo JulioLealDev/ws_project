@@ -251,31 +251,59 @@ html {
 }
 
 #sidebar{
-    width:100%;
-    display:block;
-    flex-direction: column;
-    padding-top: 5px;
-    margin: 10px 0px 10px 30px;
-    background-color: #d7e4fa;
-    text-align: center;
-    color: #4d648d;
-    max-width: 335px;
-    height: 625px;
-    overflow-x: hidden;
+  width:100%;
+  display:block;
+  flex-direction: column;
+  padding-top: 5px;
+  margin: 10px 0px 10px 30px;
+  background-color: #d7e4fa;
+  text-align: center;
+  color: #4d648d;
+  max-width: 335px;
+  height: 625px;
+  overflow-x: hidden;
 }
 
 .teste{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .selectedSymptoms{
-    width: 300px;
-    height: 40px;
-    margin: 5px 10px;
-    border: 1px solid #fff;
-    background-color: #1976d2;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 700;
+  width: 300px;
+  height: 40px;
+  margin: 5px 10px;
+  border: 1px solid #fff;
+  background-color: #1976d2;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.urgency{
+  text-align: center;
+  height: auto;
+  margin: 30px 0 30px 0;
+  padding: 20px 0 20px 0;
+}
+
+.Non-urgent{
+  background-color: blue;
+}
+.Standart{
+  background-color: green;
+}
+.Urgent{
+  background-color: darkkhaki;
+}
+.Very-urgent{
+  background-color: orange;
+}
+.Immediate{
+  background-color: red;
+}
+
+h3{
+  color: #fff;
+  font-size: 42px;
 }

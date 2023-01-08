@@ -7,11 +7,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from "../database/DataContext";
 import { getData} from "../utils/getData";
 
+const time = {
+    'Non-urgent': 240,
+    'Standart': 120,
+    'Urgent': 60,
+    'Very-urgent': 10,
+    'Immediate': 0
+}
 
 export const Result = () => {
 
     const context = useContext(DataContext)
     const [specialist, setSpecialist] = useState([])
+    const [urgency, setUrgency] = useState([])
 
     const isEmptySymptomsSelected = context.state.selectedSymptoms.length === 0
 
@@ -22,12 +30,12 @@ export const Result = () => {
     const { loading, error, result } = useReadCypher(`
         WITH $list as lst
         UNWIND lst AS x
-        MATCH (s:Symptom { name : x })-[r]->(d:Disease)
-        WITH d, COUNT(d) AS quant ORDER BY quant DESC
-        WITH d limit 5 
-        MATCH (s:Specialist)<-[r]-(d)
-        WITH s, COUNT(s) AS quant ORDER BY quant DESC
-        RETURN s limit 1`,{list:denormalizedSymptoms}
+        MATCH (s:Symptom { name : x })-[r]->(u:Disease)
+        WITH u, COUNT(u) AS quant ORDER BY quant DESC
+        WITH u limit 5  
+        MATCH (s:Specialist)<-[r]-(u)
+        WITH  u, s, COUNT(s) AS quant ORDER BY quant DESC
+        RETURN u, s limit 1`,{list:denormalizedSymptoms}
     );
 
     useEffect(() => { 
@@ -35,6 +43,11 @@ export const Result = () => {
     
             setSpecialist(getData({
                 key: 's',
+                records: result?.records
+            }))
+
+            setUrgency(getData({
+                key: 'u',
                 records: result?.records
             }))
         }
@@ -68,6 +81,12 @@ export const Result = () => {
                         <p>{specialist}</p>}
                 </div>
             </>
+        )}
+
+        {urgency && (
+            <div className={`urgency ${urgency}`}>
+                { urgency === 'Immediate' ? <h3>You will be taken care of immediately </h3> : <h3>{urgency} - Maximum {!!time[urgency] && time[urgency]} minutes standby</h3> }
+            </div>
         )}
 
         <div className="buttonsDiv">

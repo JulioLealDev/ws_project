@@ -6,7 +6,12 @@ export const getData = ({ key, records }) => {
   const data = records.map((row) => {
     const item = row.get(key);
 
-    return normalizeName(item.properties.name);
+    if(key === 'u'){
+      return normalizeName(item.properties.urgency);
+    }else{
+      return normalizeName(item.properties.name);
+    }
+
   });
 
   return data;
